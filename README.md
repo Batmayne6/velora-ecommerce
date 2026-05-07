@@ -1,5 +1,3 @@
-This is a professional README.md tailored for your Velora Luxury Ecommerce project. It's structured to look great on your GitHub profile and provides all the necessary technical details for anyone (including potential clients or employers) viewing your portfolio.
-
 🥂 VELORA | Luxury E-Commerce
 Velora is a high-fidelity, minimalist e-commerce platform designed with a focus on luxury fashion and premium user experience. Built with Next.js 15 and Tailwind CSS, it features a fully functional dynamic cart system, category filtering, and a state-based single-page navigation architecture.
 
