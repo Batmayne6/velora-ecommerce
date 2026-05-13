@@ -80,7 +80,7 @@ const App = () => {
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   // Helper to open a specific product
-  const openProduct = (product) => {
+  const openProduct = (product: any) => {
     setSelectedProduct(product);
     setCurrentPage('product');
   };
