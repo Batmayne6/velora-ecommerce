@@ -44,7 +44,7 @@ const App = () => {
   }, [currentPage]);
 
   // --- Cart Logic ---
-  const addToCart = (product) => {
+  const addToCart = (product:{price: string;image: string;) => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id && item.size === selectedSize);
       if (existing) {
