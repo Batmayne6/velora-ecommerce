@@ -59,7 +59,7 @@ const App = () => {
     setCurrentPage('cart');
   };
 
-  const updateQuantity = (id, size, delta) => {
+  const updateQuantity = (id: number, size: string, delta: number) => {
     setCart(prev => prev.map(item => {
       if (item.id === id && item.size === size) {
         const newQty = Math.max(1, item.quantity + delta);
