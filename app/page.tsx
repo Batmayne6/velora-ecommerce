@@ -85,7 +85,7 @@ const App = () => {
     setCurrentPage('product');
   };
 
-  // --- Flutterwave Configuration ---
+  // --- Flutterwave Configurations ---
   const config = {
     public_key: process.env.NEXT_PUBLIC_MY_SECRET_KEY || '', 
     tx_ref: Date.now().toString(),
