@@ -23,7 +23,7 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState('home'); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   
   // Dynamic Product State
