@@ -1,5 +1,5 @@
 "use client";
-
+import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import React, { useState, useEffect } from 'react';
 import { 
   ShoppingBag, 
@@ -27,7 +27,7 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   
   // Dynamic Product State
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedColor, setSelectedColor] = useState('Light Gray');
 
@@ -84,6 +84,27 @@ const App = () => {
     setSelectedProduct(product);
     setCurrentPage('product');
   };
+
+  // --- Flutterwave Configuration ---
+  const config = {
+    public_key: process.env.NEXT_PUBLIC_MY_SECRET_KEY || '', 
+    tx_ref: Date.now().toString(),
+    amount: cartTotal,
+    currency: 'USD',
+    payment_options: 'card,mobilemoney,ussd',
+    customer: {
+      email: 'customer@velora.com',
+      phone_number: '0810290382',
+      name: 'Velora Customer',
+    },
+    customizations: {
+      title: 'VELORA Store',
+      description: 'Payment for items in cart',
+      logo: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=100&q=80',
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
 
   // --- Data ---
   const products = [
@@ -205,7 +226,7 @@ const App = () => {
       ) : (
         <div className="grid lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-8">
-            {cart.map((item, idx) => (
+            {cart.map((item: any, idx: number) => (
               <div key={`${item.id}-${item.size}-${idx}`} className="flex gap-6 pb-8 border-b border-gray-100">
                 <div className="w-32 aspect-[3/4] bg-gray-50 flex-shrink-0">
                   <img src={item.image} className="w-full h-full object-cover" />
@@ -230,6 +251,8 @@ const App = () => {
               </div>
             ))}
           </div>
+
+          {/* ORDER SUMMARY SECTION */}
           <div className="bg-[#FAFAFA] p-8 h-fit border border-gray-100">
             <h3 className="font-bold text-xs tracking-widest uppercase mb-8">Order Summary</h3>
             <div className="space-y-4 mb-8">
@@ -246,8 +269,25 @@ const App = () => {
               <span className="font-serif text-xl">Total</span>
               <span className="text-xl font-bold">${cartTotal.toFixed(2)}</span>
             </div>
-            <button className="w-full bg-black text-white py-5 text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-slate-800 transition-all">
-              Checkout
+
+            {/* FLUTTERWAVE BUTTON (REPLACING THE OLD CHECKOUT BUTTON) */}
+            <button 
+              onClick={() => {
+                handleFlutterPayment({
+                  callback: (response) => {
+                    if (response.status === "successful") {
+                      alert("Payment Successful!");
+                      setCart([]);
+                      setCurrentPage('home');
+                    }
+                    closePaymentModal();
+                  },
+                  onClose: () => console.log("Payment closed"),
+                });
+              }}
+              className="w-full bg-black text-white py-5 text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-slate-800 transition-all"
+            >
+              Pay with Flutterwave
             </button>
           </div>
         </div>
@@ -420,7 +460,7 @@ const App = () => {
               <button onClick={() => setCurrentPage('home')} className="text-3xl font-serif tracking-[0.15em] mb-8 cursor-pointer hover:text-[#C5A373] transition-colors duration-300">VELORA</button>
               <p className="text-gray-400 text-sm leading-relaxed mb-8">Elevating everyday style through conscious design and impeccable quality.</p>
               <div className="flex gap-4">
-                {[Mail, Globe, User].map((Icon, i) => (
+                {[Mail, Globe, User].map((Icon: any, i: number) => (
                   <a key={i} href="#" className="w-10 h-10 border border-gray-800 flex items-center justify-center hover:border-[#C5A373] hover:text-[#C5A373] transition-all cursor-pointer"><Icon size={18} /></a>
                 ))}
               </div>
