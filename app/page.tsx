@@ -69,8 +69,7 @@ const App = () => {
     }));
   };
 
-  const removeFromCart = (id, size) => {
-    setCart(prev => prev.filter(item => !(item.id === id && item.size === size)));
+ const removeFromCart = (id: number, size: string) => {    setCart(prev => prev.filter(item => !(item.id === id && item.size === size)));
   };
 
   const cartTotal = cart.reduce((sum, item) => {
